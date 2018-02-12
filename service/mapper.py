@@ -8,11 +8,11 @@ SAMPLE_DATA_LOCATION = os.path.join(os.path.dirname(__file__), '..', 'data', 'sa
 JAVASCRIPT_REFRESH_PAGE = """
 <script type="text/javascript">
     function refresh() {
-        console.log("Refreshing this page!...")
         window.location.reload(true);
-        setTimeout(refresh, 30000)
+        setTimeout(refresh, 30000);
+        console.log('page refreshed!')
     }
-    setTimeout(refresh, 30000)
+    setTimeout(refresh, 30000);
 </script>
 """
 
