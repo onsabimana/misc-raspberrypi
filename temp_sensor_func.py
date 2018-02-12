@@ -1,16 +1,20 @@
+from __future__ import print_function
+
 import os
 import time
 
 SENSOR_LOCATION = '/sys/bus/w1/devices/'
-DEVICE_PREFIX  = '28-*'
+DEVICE_PREFIX = '28-*'
 
 # load hw modules/drivers for the temperature sensor to work
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
 
+
 # Find the driver
 def find_driver():
-    finder = os.popen('ls {location} | grep {prefix}'.format(location=SENSOR_LOCATION, prefix=DEVICE_PREFIX))
+    finder = os.popen('ls {location} | grep {prefix}'.format(
+        location=SENSOR_LOCATION, prefix=DEVICE_PREFIX))
 
     devices = finder.read()
     devices = devices.strip('\n')
@@ -20,6 +24,7 @@ def find_driver():
     return SENSOR_LOCATION + devices[0]
 
 
+# create drivers
 driver = find_driver()
 reader = '/'.join([driver, 'w1_slave'])
 
@@ -31,6 +36,8 @@ def temp_raw():
     return lines
 
 #  TODO: leave this function blank for students to code the formula
+
+
 def convert_to_farhneit(temp_c):
     return temp_c * 9.0 / 5.0 + 32.0
 
@@ -64,7 +71,9 @@ def read_temp():
 
 def main():
     while True:
-        print read_temp()
+        temp_c, temp_f = read_temp()
+        print('Current Temperature in Celcius: ', temp_c)
+        print('Current Temperature in Farhneit: ', temp_f)
         time.sleep(1)
 
 
